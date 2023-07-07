@@ -136,14 +136,14 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_Login_jButton3ActionPerformed
     
     private void login() {
-        String username = UsernameLogin_jTextField1.getText();
-        String password = new String(PasswordLogin_jPasswordField1.getPassword());
+        String username_user = UsernameLogin_jTextField1.getText();
+        String password_user = new String(PasswordLogin_jPasswordField1.getPassword());
         
         try (Connection connection = Koneksi.getConnection()){
-            String query = "SLECT * FROM users WHERE username=? AND password=?";
+            String query = "SELECT * FROM User_Tasks WHERE username_user=? AND password_user=?";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, username);
-            statement.setString(2, password);
+            statement.setString(1, username_user);
+            statement.setString(2, password_user);
             
             ResultSet resultset = statement.executeQuery();
             
@@ -156,7 +156,7 @@ public class Login extends javax.swing.JFrame {
                 System.out.println("Login Gagal!");
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
     

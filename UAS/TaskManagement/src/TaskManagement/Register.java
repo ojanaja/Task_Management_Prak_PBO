@@ -208,9 +208,6 @@ public class Register extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        Register();
-    }//GEN-LAST:event_jButton1ActionPerformed
-    private void Register(){
         String nama_user = NamaRegis_jTextField1.getText();
         String email_user = EmailRegis_jTextField2.getText();
         String username_user = UsernameRegis_jTextField3.getText();
@@ -220,7 +217,7 @@ public class Register extends javax.swing.JFrame {
         // Validate the user input
         if (nama_user.isEmpty() || email_user.isEmpty() || username_user.isEmpty() || password_user.isEmpty() || retypePassword.isEmpty()) {
             // Display an error message or perform any other action for invalid input
-            System.out.println("Please fill the fields!");
+            System.out.println("Please fill in all fields!");
             return;
         }
 
@@ -232,8 +229,7 @@ public class Register extends javax.swing.JFrame {
         }
         
         try (Connection connection = Koneksi.getConnection()){
-            String query = "INSERT INTO users (nama_user, email_user, username_user, password_user) VALUES (?,?,?,?)";
-            PreparedStatement statement = connection.prepareStatement(query);
+            PreparedStatement statement = connection.prepareStatement("insert into User_Tasks(nama_user, email_user, username_user, password_user) values(?,?,?,?)");
             statement.setString(1, nama_user);
             statement.setString(2, email_user);
             statement.setString(3, username_user);
@@ -247,9 +243,9 @@ public class Register extends javax.swing.JFrame {
                 System.out.println("Registerasi Gagal!");
             }
         } catch (SQLException e){
-            e.printStackTrace();
+           System.out.println(e.getMessage());
         }
-    }
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * @param args the command line arguments
