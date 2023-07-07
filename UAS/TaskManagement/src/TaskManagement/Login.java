@@ -5,6 +5,13 @@
  */
 package TaskManagement;
 
+import Konfigurasi.Koneksi;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author acer
@@ -57,6 +64,11 @@ public class Login extends javax.swing.JFrame {
         PasswordLogin_jPasswordField1.setText("jPasswordField1");
 
         Login_jButton1.setText("Login");
+        Login_jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Login_jButton1ActionPerformed(evt);
+            }
+        });
 
         SignUp_jButton2.setText("Sign Up");
 
@@ -121,6 +133,36 @@ public class Login extends javax.swing.JFrame {
     private void UsernameLogin_jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameLogin_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_UsernameLogin_jTextField1ActionPerformed
+
+    private void Login_jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_jButton1ActionPerformed
+        // TODO add your handling code here:
+        login();
+    }//GEN-LAST:event_Login_jButton1ActionPerformed
+    
+    private void login() {
+        String username = UsernameLogin_jTextField1.getText();
+        String password = new String(PasswordLogin_jPasswordField1.getPassword());
+        
+        try (Connection connection = Koneksi.getConnection()){
+            String query = "SLECT * FROM users WHERE username=? AND password=?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+            statement.setString(2, password);
+            
+            ResultSet resultset = statement.executeQuery();
+            
+            if (resultset.next()){
+                TaskManagement taskManagement = new TaskManagement();
+                taskManagement.setVisible(true);
+                
+                dispose();
+            } else {
+                System.out.println("Login Gagal!");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments

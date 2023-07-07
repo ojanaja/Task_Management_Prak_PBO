@@ -5,6 +5,12 @@
  */
 package TaskManagement;
 
+import Konfigurasi.Koneksi;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author acer
@@ -167,6 +173,42 @@ public class Register extends javax.swing.JPanel {
 
     private void Register_jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Register_jButton1ActionPerformed
         // TODO add your handling code here:
+        String nama = Nama_jTextField2.getText();
+        String email = Email_jTextField3.getText();
+        String username = UsernameRegister_jTextField4.getText();
+        String password = new String(PasswordRegister_jPasswordField1.getPassword());
+        String retypePassword = ReTypePasswordRegister_jTextField6.getText();
+
+        // Validate the user input
+        if (nama.isEmpty() || email.isEmpty() || username.isEmpty() || password.isEmpty() || retypePassword.isEmpty()) {
+            // Display an error message or perform any other action for invalid input
+            return;
+        }
+
+        // Check if the password and retype password match
+        if (!password.equals(retypePassword)) {
+            // Display an error message or perform any other action for password mismatch
+            return;
+        }
+        
+        try (Connection connection = Koneksi.getConnection()){
+            String query = "INSERT INTO users (nama, email, username, password) VALUES (?,?,?,?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nama);
+            statement.setString(2, email);
+            statement.setString(3, username);
+            statement.setString(4, password);
+            
+            int rowsInserted = statement.executeUpdate();
+            
+            if (rowsInserted > 0){
+                System.out.println("Registerasi Berhasil!");
+            } else {
+                System.out.println("Registerasi Gagal!");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_Register_jButton1ActionPerformed
 
 
