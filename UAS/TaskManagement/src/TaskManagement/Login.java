@@ -19,7 +19,7 @@ import java.sql.SQLException;
 public class Login extends javax.swing.JFrame {
 
     /**
-     * Creates new form Login
+     * Creates new form Login2
      */
     public Login() {
         initComponents();
@@ -34,45 +34,44 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        KeluarLogin_jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        UsernameLogin_jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        Login_jButton3 = new javax.swing.JButton();
+        Remember_jCheckBox1 = new javax.swing.JCheckBox();
+        UsernameLogin_jTextField1 = new javax.swing.JTextField();
         PasswordLogin_jPasswordField1 = new javax.swing.JPasswordField();
-        Login_jButton1 = new javax.swing.JButton();
-        SignUp_jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Tw Cen MT", 0, 24)); // NOI18N
-        jLabel1.setText("WELCOME TO TASK MANAGEMENT");
+        KeluarLogin_jButton2.setText("-");
+        KeluarLogin_jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                KeluarLogin_jButton2ActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Insert Your Username and Password!!!");
+        jLabel1.setText("TASK MANAGEMENT");
+
+        jLabel2.setText("User Login");
 
         jLabel3.setText("Username");
 
-        UsernameLogin_jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsernameLogin_jTextField1ActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Password");
 
-        PasswordLogin_jPasswordField1.setText("jPasswordField1");
-
-        Login_jButton1.setText("Login");
-        Login_jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Login_jButton3.setText("Login");
+        Login_jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                Login_jButton1ActionPerformed(evt);
+                Login_jButton3ActionPerformed(evt);
             }
         });
 
-        SignUp_jButton2.setText("Sign Up");
-
-        jButton3.setText("X");
+        Remember_jCheckBox1.setText("Remember Me");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,63 +80,60 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGap(94, 94, 94)
-                            .addComponent(jLabel2))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(39, 39, 39)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(48, 48, 48)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(UsernameLogin_jTextField1)
-                                .addComponent(PasswordLogin_jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))))
+                        .addContainerGap()
+                        .addComponent(KeluarLogin_jButton2))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
+                        .addGap(168, 168, 168)
+                        .addComponent(jLabel2))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Login_jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(SignUp_jButton2)))
-                    .addComponent(jButton3))
-                .addContainerGap(21, Short.MAX_VALUE))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(UsernameLogin_jTextField1)
+                            .addComponent(Remember_jCheckBox1)
+                            .addComponent(Login_jButton3)
+                            .addComponent(PasswordLogin_jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE))))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jButton3)
+                .addContainerGap()
+                .addComponent(KeluarLogin_jButton2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
-                .addGap(27, 27, 27)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(UsernameLogin_jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(PasswordLogin_jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(Login_jButton1)
+                .addComponent(Remember_jCheckBox1)
                 .addGap(18, 18, 18)
-                .addComponent(SignUp_jButton2)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addComponent(Login_jButton3)
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void UsernameLogin_jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UsernameLogin_jTextField1ActionPerformed
+    private void KeluarLogin_jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KeluarLogin_jButton2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_UsernameLogin_jTextField1ActionPerformed
+    }//GEN-LAST:event_KeluarLogin_jButton2ActionPerformed
 
-    private void Login_jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_jButton1ActionPerformed
+    private void Login_jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_jButton3ActionPerformed
         // TODO add your handling code here:
         login();
-    }//GEN-LAST:event_Login_jButton1ActionPerformed
+    }//GEN-LAST:event_Login_jButton3ActionPerformed
     
     private void login() {
         String username = UsernameLogin_jTextField1.getText();
@@ -163,7 +159,7 @@ public class Login extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    
     /**
      * @param args the command line arguments
      */
@@ -190,6 +186,9 @@ public class Login extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -200,11 +199,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Login_jButton1;
+    private javax.swing.JButton KeluarLogin_jButton2;
+    private javax.swing.JButton Login_jButton3;
     private javax.swing.JPasswordField PasswordLogin_jPasswordField1;
-    private javax.swing.JButton SignUp_jButton2;
+    private javax.swing.JCheckBox Remember_jCheckBox1;
     private javax.swing.JTextField UsernameLogin_jTextField1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
