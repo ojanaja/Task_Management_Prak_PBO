@@ -17,17 +17,16 @@ public class Koneksi {
 
     public static Connection getConnection() {
         Connection conn = null;
-        String DB_Host = "jdbc:mysql://217.21.72.81:3306";
-        String user = "u1574114_praktikum_user_f";
-        String password = "s5&J}gNdK$?Z";
+        String url = "jdbc:mysql://localhost:3306/taskmanagement";
+        String user = "root";
+        String password = "";
         try {
-            conn = DriverManager.getConnection(DB_Host, user, password);
+            conn = DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
             System.out.println(e);
         }
         return conn;
     }
-
     public static void main(String[] args) {
         try {
             Connection c = Koneksi.getConnection();

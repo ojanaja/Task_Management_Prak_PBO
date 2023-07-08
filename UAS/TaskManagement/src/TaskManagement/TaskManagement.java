@@ -5,6 +5,16 @@
  */
 package TaskManagement;
 
+import Konfigurasi.Koneksi;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author acer
@@ -17,7 +27,7 @@ public class TaskManagement extends javax.swing.JFrame {
     public TaskManagement() {
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,34 +48,49 @@ public class TaskManagement extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         Delete_jButton5 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        Edit_jButton6 = new javax.swing.JButton();
-        JudulTugas_jTextField9 = new javax.swing.JTextField();
+        NamaTugas_jTextField9 = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         Deadline_jTextField10 = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         Desc_jTextArea1 = new javax.swing.JTextArea();
         Status_jTextField11 = new javax.swing.JTextField();
+        Update_jButton1 = new javax.swing.JButton();
+        UserID_jTextField2 = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        Tampil_jButton1 = new javax.swing.JButton();
+        Mulai_jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "TaskID", "UserID", "Nama Tugas", "Deadline", "Status"
+                "TaskID", "UserID", "Nama Tugas", "Deadline", "Status", "Desc"
             }
         ));
+        jTable2.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jTable2AncestorAdded(evt);
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                jTable2AncestorMoved(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
-        jLabel11.setText("Judul Tugas");
+        jLabel11.setText("Nama Tugas");
 
-        jLabel12.setText("Deadline");
+        jLabel12.setText("Selesai Tugas");
 
         KeluarTask_jToggleButton1.setText("-");
         KeluarTask_jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -81,20 +106,29 @@ public class TaskManagement extends javax.swing.JFrame {
         jLabel1.setText("Task Management");
 
         Save_jButton4.setText("Save");
+        Save_jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Save_jButton4ActionPerformed(evt);
+            }
+        });
 
-        jLabel2.setText("Welcome to Our Project. Wish me luck.");
+        jLabel2.setFont(new java.awt.Font("Imprint MT Shadow", 0, 12)); // NOI18N
+        jLabel2.setText("Welcome to Our Project. Wish our team luck.");
 
         Delete_jButton5.setText("Delete");
+        Delete_jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Delete_jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Imprint MT Shadow", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setText("ListTask");
 
-        Edit_jButton6.setText("Edit");
-
-        JudulTugas_jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        NamaTugas_jTextField9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JudulTugas_jTextField9ActionPerformed(evt);
+                NamaTugas_jTextField9ActionPerformed(evt);
             }
         });
 
@@ -116,103 +150,199 @@ public class TaskManagement extends javax.swing.JFrame {
             }
         });
 
+        Update_jButton1.setText("Update");
+        Update_jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Update_jButton1ActionPerformed(evt);
+            }
+        });
+
+        UserID_jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserID_jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("UserID");
+
+        Tampil_jButton1.setText("Tampil Data");
+        Tampil_jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Tampil_jButton1ActionPerformed(evt);
+            }
+        });
+
+        Mulai_jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Mulai_jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Mulai Tugas");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(KeluarTask_jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(276, 276, 276)
-                                .addComponent(jLabel4))))
+                                .addGap(5, 5, 5)
+                                .addComponent(jLabel1)
+                                .addGap(318, 318, 318)
+                                .addComponent(jLabel4))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(226, 226, 226)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addGap(41, 41, 41))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel12)
-                                        .addGap(59, 59, 59)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(JudulTugas_jTextField9)
-                                    .addComponent(Deadline_jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Status_jTextField11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel13)
-                                    .addComponent(jLabel14))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(Status_jTextField11)
-                                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(Save_jButton4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Delete_jButton5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(Edit_jButton6)))))
-                        .addGap(85, 85, 85)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 211, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(37, 37, 37)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(NamaTugas_jTextField9, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                                    .addComponent(Deadline_jTextField10)
+                                    .addComponent(UserID_jTextField2)
+                                    .addComponent(Mulai_jTextField1))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 267, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Delete_jButton5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Tampil_jButton1))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(114, 114, 114)
+                        .addComponent(Save_jButton4)
+                        .addGap(18, 18, 18)
+                        .addComponent(Update_jButton1)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(KeluarTask_jToggleButton1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGap(16, 16, 16)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JudulTugas_jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(KeluarTask_jToggleButton1)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(44, 44, 44)
+                            .addComponent(jLabel4))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Delete_jButton5)
+                            .addComponent(Tampil_jButton1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(UserID_jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(NamaTugas_jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(12, 12, 12))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(Mulai_jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Deadline_jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(Status_jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Save_jButton4)
-                    .addComponent(Delete_jButton5)
-                    .addComponent(Edit_jButton6))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel14))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(Update_jButton1)
+                            .addComponent(Save_jButton4))
+                        .addGap(31, 31, 31))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+private void TampilData() {
+    DefaultTableModel tableModel = new DefaultTableModel();
+    tableModel.addColumn("TaskID");
+    tableModel.addColumn("UserID");
+    tableModel.addColumn("Nama Tugas");
+    tableModel.addColumn("Tanggal Mulai Tugas");
+    tableModel.addColumn("Tanggal Selesai Tugas");
+    tableModel.addColumn("Status");
+    tableModel.addColumn("Desciption");
+    jTable2.setModel(tableModel);
+    
+    Connection conn = Koneksi.getConnection();
+    try {
+        Statement stmt = conn.createStatement();
+        String SQL = "SELECT * FROM tasks";
+        ResultSet res = stmt.executeQuery(SQL);
+        
+        while (res.next()) {
+            tableModel.addRow(new Object[]{
+                res.getString("id_task"),
+                res.getString("id_user"),
+                res.getString("judul_task"),
+                res.getString("tanggal_mulai_task"),
+                res.getString("tanggal_selesai_task"),
+                res.getString("status_task"),
+                res.getString("deskripsi_task")
+            });
+        }
+    } catch (SQLException e) {
+        System.out.println("Terjadi kesalahan: " + e.getMessage());
+    }
+}
 
     private void KeluarTask_jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_KeluarTask_jToggleButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_KeluarTask_jToggleButton1ActionPerformed
 
-    private void JudulTugas_jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JudulTugas_jTextField9ActionPerformed
+    private void NamaTugas_jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NamaTugas_jTextField9ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_JudulTugas_jTextField9ActionPerformed
+    }//GEN-LAST:event_NamaTugas_jTextField9ActionPerformed
 
     private void Deadline_jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Deadline_jTextField10ActionPerformed
         // TODO add your handling code here:
@@ -221,6 +351,124 @@ public class TaskManagement extends javax.swing.JFrame {
     private void Status_jTextField11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Status_jTextField11ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_Status_jTextField11ActionPerformed
+
+    private void Update_jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Update_jButton1ActionPerformed
+    int row = jTable2.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih data yang akan diupdate!");
+    } else {
+        String taskID = jTable2.getValueAt(row, 0).toString();
+        String userID = UserID_jTextField2.getText();
+        String namaTugas = NamaTugas_jTextField9.getText();
+        String MulaiTugas = Mulai_jTextField1.getText();
+        String deadline = Deadline_jTextField10.getText();
+        String status = Status_jTextField11.getText();
+        String deskripsi = Desc_jTextArea1.getText();
+
+        try (Connection connection = Koneksi.getConnection()) {
+            PreparedStatement statement = connection.prepareStatement("UPDATE tasks SET id_user = ?, judul_task = ?,tanggal_mulai_task = ?, tanggal_selesai_task = ?, status_task = ?, deskripsi_task = ? WHERE id_task = ?");
+            statement.setString(1, userID);
+            statement.setString(2, namaTugas);
+            statement.setString(3, MulaiTugas);
+            statement.setString(3, deadline);
+            statement.setString(4, status);
+            statement.setString(5, deskripsi);
+            statement.setString(6, taskID);
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Data berhasil diupdate ke database!");
+            } else {
+                System.out.println("Gagal mengupdate data ke database!");
+            }
+            TampilData();
+        } catch (SQLException e) {
+            System.out.println("Terjadi kesalahan: " + e.getMessage());
+        }
+    }
+    }//GEN-LAST:event_Update_jButton1ActionPerformed
+
+    private void Save_jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Save_jButton4ActionPerformed
+ // Mendapatkan nilai dari komponen input
+    String UserID = UserID_jTextField2.getText();
+    String NamaTugas = NamaTugas_jTextField9.getText();
+    String MulaiTugas = Mulai_jTextField1.getText();
+    String deadline = Deadline_jTextField10.getText();
+    String status = Status_jTextField11.getText();
+    String deskripsi = Desc_jTextArea1.getText();
+
+    try (Connection connection = Koneksi.getConnection()) {
+        PreparedStatement statement = connection.prepareStatement("INSERT INTO tasks( id_user, judul_task,tanggal_mulai_task, tanggal_selesai_task, status_task, deskripsi_task) VALUES (?, ?, ?,?, ?, ?)");
+        statement.setString(1, UserID);
+        statement.setString(2, NamaTugas);
+        statement.setString(3, MulaiTugas);
+        statement.setString(4, deadline);
+        statement.setString(5, status);
+        statement.setString(6, deskripsi);
+
+        int rowsInserted = statement.executeUpdate();
+        if (rowsInserted > 0) {
+            System.out.println("Data berhasil disimpan ke database!");
+        } else {
+            System.out.println("Gagal menyimpan data ke database!");
+        } TampilData();
+    } catch (SQLException e) {
+        System.out.println("Terjadi kesalahan: " + e.getMessage());
+    }
+
+    // Mengosongkan input setelah data disimpan
+    UserID_jTextField2.setText("");
+    NamaTugas_jTextField9.setText("");
+    Mulai_jTextField1.setText("");
+    Deadline_jTextField10.setText("");
+    Status_jTextField11.setText("");
+    Desc_jTextArea1.setText("");
+    }//GEN-LAST:event_Save_jButton4ActionPerformed
+
+    private void Delete_jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Delete_jButton5ActionPerformed
+  int row = jTable2.getSelectedRow();
+    if (row == -1) {
+        JOptionPane.showMessageDialog(this, "Pilih data yang akan dihapus!");
+    } else {
+        String taskID = jTable2.getValueAt(row, 0).toString();
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah Anda yakin ingin menghapus data ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try (Connection connection = Koneksi.getConnection()) {
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM tasks WHERE id_task = ?");
+                statement.setString(1, taskID);
+                int rowsDeleted = statement.executeUpdate();
+
+                if (rowsDeleted > 0) {
+                    System.out.println("Data berhasil dihapus dari database!");
+                } else {
+                    System.out.println("Gagal menghapus data dari database!");
+                }
+            } catch (SQLException e) {
+                System.out.println("Terjadi kesalahan: " + e.getMessage());
+            }
+            TampilData();
+        }
+    }    }//GEN-LAST:event_Delete_jButton5ActionPerformed
+
+    private void UserID_jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserID_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_UserID_jTextField2ActionPerformed
+
+    private void jTable2AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable2AncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable2AncestorAdded
+
+    private void jTable2AncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable2AncestorMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable2AncestorMoved
+
+    private void Tampil_jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tampil_jButton1ActionPerformed
+    TampilData();
+    }//GEN-LAST:event_Tampil_jButton1ActionPerformed
+
+    private void Mulai_jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Mulai_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Mulai_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -262,18 +510,23 @@ public class TaskManagement extends javax.swing.JFrame {
     private javax.swing.JTextField Deadline_jTextField10;
     private javax.swing.JButton Delete_jButton5;
     private javax.swing.JTextArea Desc_jTextArea1;
-    private javax.swing.JButton Edit_jButton6;
-    private javax.swing.JTextField JudulTugas_jTextField9;
     private javax.swing.JToggleButton KeluarTask_jToggleButton1;
+    private javax.swing.JTextField Mulai_jTextField1;
+    private javax.swing.JTextField NamaTugas_jTextField9;
     private javax.swing.JButton Save_jButton4;
     private javax.swing.JTextField Status_jTextField11;
+    private javax.swing.JButton Tampil_jButton1;
+    private javax.swing.JButton Update_jButton1;
+    private javax.swing.JTextField UserID_jTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable2;
